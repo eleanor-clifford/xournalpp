@@ -41,12 +41,12 @@ void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
             this->modifyModifiersByDrawDir(width, height, true);
         }
 
-        if (this->modShift)  // make circle
+        if (!this->modShift)  // make circle
         {
             int signW = width > 0 ? 1 : -1;
             int signH = height > 0 ? 1 : -1;
-            width = (this->modControl) ? sqrt(pow(width, 2) + pow(height, 2)) :
-                                         std::max(width * signW, height * signH) * signW;
+            width = (!this->modControl) ? sqrt(pow(width, 2) + pow(height, 2)) :
+                                          std::max(width * signW, height * signH) * signW;
             height = (width * signW) * signH;
         }
 
@@ -58,7 +58,7 @@ void EllipseHandler::drawShape(Point& c, const PositionInputData& pos) {
         double angle = 0;
 
         // set resolution proportional to radius
-        if (!this->modControl) {
+        if (this->modControl) {
             diameterX = width;
             diameterY = height;
             npts = static_cast<int>(std::abs(diameterX * 2.0));
